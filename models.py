@@ -1,6 +1,8 @@
 import datetime
-from sqlalchemy import ForeignKey, String, Numeric
+
+from sqlalchemy import ForeignKey, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
+
 from database import Base
 
 
@@ -14,6 +16,7 @@ class ExpenseDB(Base):
     date: Mapped[datetime.date] = mapped_column(default=datetime.date.today)
     notes: Mapped[str | None] = mapped_column(String(500))
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+
 
 class UserDB(Base):
     __tablename__ = "users"
