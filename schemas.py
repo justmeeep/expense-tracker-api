@@ -40,3 +40,11 @@ class UserOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class CategorySuggestRequest(BaseModel):
+    description: str
+
+
+class CategorySuggestion(BaseModel):
+    category: str

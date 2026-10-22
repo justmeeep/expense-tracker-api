@@ -4,10 +4,17 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from categorizer import suggest_category
 from database import get_db
 from dependencies import get_current_user
 from models import ExpenseDB, UserDB
-from schemas import Expense, ExpenseCreate, ExpenseUpdate
+from schemas import (
+    CategorySuggestion,
+    CategorySuggestRequest,
+    Expense,
+    ExpenseCreate,
+    ExpenseUpdate,
+)
 
 router = APIRouter(prefix="/expenses", tags=["expenses"])
 
@@ -91,3 +98,11 @@ def delete_expense(
     expense = get_user_expense(db, expense_id, current_user)
     db.delete(expense)
     db.commit()
+
+
+@router.post("/suggest-category", response_model=CategorySuggestion)
+def suggest_expense_category(
+    data: CategorySuggestRequest,
+    current_user: UserDB = Depends(get_current_user),
+):
+    return CategorySuggestion(category=suggest_category(data.description))
