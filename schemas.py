@@ -48,3 +48,17 @@ class CategorySuggestRequest(BaseModel):
 
 class CategorySuggestion(BaseModel):
     category: str
+
+
+class CategoryTotal(BaseModel):
+    category: str
+    total: Decimal
+    percent: float
+
+
+class MonthlySummary(BaseModel):
+    year: int
+    month: int
+    total: Decimal
+    by_category: list[CategoryTotal]
+    insight: str
